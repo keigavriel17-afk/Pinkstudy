@@ -1,0 +1,542 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>PinkStudy</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Poppins:wght@500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#100D14;--surface:#1C1722;--card:#251D2B;--pink:#FF5CA8;--lpink:#FF9CCB;--accent:#C83D83;--text:#FFF3F8;--muted:#B9A9B5;--line:#3B2B3B;color-scheme:dark;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px)}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*,*::before,*::after{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--text);font:400 16px/1.5 Inter,system-ui,sans-serif}
+h1,h2,h3{font-family:Poppins,Inter,sans-serif;margin:0;letter-spacing:-.01em}
+h1{font-size:30px;margin-bottom:6px}h2{font-size:20px}h3{font-size:16px}
+button{font:inherit;color:inherit;cursor:pointer;border:0;background:none}
+:focus-visible{outline:2px solid var(--lpink);outline-offset:2px}
+.app{display:grid;grid-template-columns:230px 1fr;min-height:100vh}
+aside{background:var(--surface);border-right:1px solid var(--line);padding:22px 14px;position:sticky;top:0;height:100vh}
+.brand{display:flex;align-items:center;gap:10px;padding:0 10px 22px;font:700 21px Poppins}
+.logo{width:34px;height:34px;border-radius:12px 12px 12px 4px;background:linear-gradient(135deg,var(--pink),var(--accent));display:grid;place-items:center;font-style:normal;font-size:18px}
+nav{display:flex;flex-direction:column;gap:4px}
+nav button{display:flex;align-items:center;gap:12px;padding:12px 14px;border-radius:14px;color:var(--muted);text-align:left;font-weight:500}
+nav button:hover{background:var(--card);color:var(--text)}
+nav button.on{background:var(--card);color:var(--lpink)}
+nav button.mk{background:linear-gradient(135deg,var(--pink),var(--accent));color:#1a0a13;font-weight:600;margin:6px 0}
+nav button span{width:20px;text-align:center}
+main{padding:36px 32px 60px;max-width:860px;width:100%;margin:0 auto}
+.sub{color:var(--muted);margin:0 0 24px}
+.btn{padding:12px 22px;border-radius:999px;font-weight:600;background:linear-gradient(135deg,var(--pink),var(--accent));color:#1a0a13;transition:transform .15s}
+.btn:hover{transform:translateY(-1px)}.btn:disabled{opacity:.5;cursor:default;transform:none}
+.btn.ghost{background:var(--card);color:var(--text);border:1px solid var(--line)}
+.link{color:var(--lpink)}.link:hover{text-decoration:underline}
+.hero{display:flex;align-items:center;justify-content:space-between;gap:20px;background:linear-gradient(135deg,#3a1d33,var(--card));border:1px solid var(--accent);border-radius:24px;padding:26px;margin-bottom:20px}
+.hero p{margin:6px 0 0;color:var(--muted)}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:28px}
+.stat{background:var(--surface);border:1px solid var(--line);border-radius:18px;padding:16px}
+.stat b{display:block;font:600 28px Poppins}.stat span{color:var(--muted);font-size:14px}
+.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin-top:14px}
+.set{text-align:left;background:var(--surface);border:1px solid var(--line);border-radius:18px;padding:18px;transition:border-color .2s}
+.set:hover{border-color:var(--pink)}.set p{margin:2px 0 12px;color:var(--muted);font-size:14px}
+.bar{height:8px;background:var(--surface);border:1px solid var(--line);border-radius:9px;overflow:hidden;margin-bottom:6px}
+.bar b{display:block;height:100%;background:linear-gradient(90deg,var(--accent),var(--pink))}
+.in{width:100%;background:var(--surface);border:1px solid var(--line);border-radius:14px;color:var(--text);font:inherit;padding:12px 16px}
+.in:focus{border-color:var(--pink);outline:0}
+.panel{background:var(--card);border:1px solid var(--line);border-radius:20px;padding:18px;margin:16px 0}
+label{display:block;margin-bottom:8px;color:var(--muted);font-size:14px}
+code{background:var(--bg);padding:1px 6px;border-radius:6px;color:var(--lpink)}
+.row2{display:flex;align-items:center;flex-wrap:wrap;gap:12px;margin:14px 0}.c{justify-content:center}
+.hint{color:var(--muted);font-size:14px;margin:0}
+.er{display:grid;grid-template-columns:1fr 1.4fr 36px;gap:8px;margin-bottom:8px}
+.x{color:var(--muted);font-size:22px;border-radius:10px}.x:hover{background:var(--card);color:var(--lpink)}
+.err{color:var(--lpink);min-height:1.4em;margin:6px 0}
+.cr{display:grid;grid-template-columns:1fr 1.4fr;gap:14px;padding:10px 0;border-bottom:1px solid var(--line)}.cr:last-child{border:0}.cr span{color:var(--muted)}
+.flip{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;width:100%;min-height:280px;margin:6px 0 12px;padding:28px;border-radius:26px;background:var(--card);border:1px solid var(--pink);font:600 26px/1.3 Poppins;text-align:center;animation:fl .3s}
+.flip.f{background:linear-gradient(135deg,#3a1d33,var(--card))}.flip small{font:400 14px Inter;color:var(--muted)}
+@keyframes fl{from{transform:rotateX(60deg);opacity:.3}to{transform:none;opacity:1}}
+.opt{display:block;width:100%;text-align:left;padding:14px 16px;margin-bottom:10px;border-radius:14px;background:var(--surface);border:1px solid var(--line)}
+.opt:hover:not(:disabled){border-color:var(--pink)}.opt:disabled{cursor:default}
+.opt.ok{border-color:#6fdc9c;background:#1d2b25}.opt.bad{border-color:var(--accent);background:#2b1a24}
+.chart{display:flex;align-items:flex-end;gap:10px;height:130px;margin-top:14px}
+.chart div{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;gap:6px;height:100%;font-size:12px;color:var(--muted)}
+.chart i{display:block;width:100%;border-radius:8px 8px 4px 4px;background:linear-gradient(var(--pink),var(--accent));min-height:4px}
+.toast{position:fixed;left:50%;bottom:calc(88px + env(safe-area-inset-bottom,0px));transform:translate(-50%,16px);background:var(--card);border:1px solid var(--pink);padding:12px 18px;border-radius:14px;opacity:0;pointer-events:none;transition:.25s;z-index:20;max-width:90vw}
+.toast.show{opacity:1;transform:translate(-50%,0)}
+.empty{text-align:center;color:var(--muted);padding:30px 10px}
+body::before{content:"";position:fixed;inset:0;z-index:-1;background:radial-gradient(520px 420px at 10% 6%,rgba(255,92,168,.38),transparent 70%),radial-gradient(620px 520px at 92% 32%,rgba(200,61,131,.32),transparent 70%),radial-gradient(520px 520px at 38% 104%,rgba(255,156,203,.2),transparent 70%)}
+aside,.stat,.set,.panel,.in,.opt,.flip,.hero,.toast,.btn.ghost{background:rgba(255,255,255,.06);-webkit-backdrop-filter:blur(18px) saturate(150%);backdrop-filter:blur(18px) saturate(150%);border:1px solid rgba(255,255,255,.13);box-shadow:0 8px 32px rgba(0,0,0,.35),inset 0 1px 0 rgba(255,255,255,.14)}
+aside{background:rgba(28,23,34,.55)}
+.hero{background:linear-gradient(135deg,rgba(255,92,168,.24),rgba(255,255,255,.05));border-color:rgba(255,156,203,.35)}
+.flip.f{background:linear-gradient(135deg,rgba(255,92,168,.28),rgba(255,255,255,.06))}
+.in{box-shadow:inset 0 1px 0 rgba(255,255,255,.08)}
+nav button:hover{background:rgba(255,255,255,.08)}
+nav button.on{background:rgba(255,92,168,.18);box-shadow:inset 0 0 0 1px rgba(255,156,203,.3)}
+.bar{background:rgba(255,255,255,.08);border-color:rgba(255,255,255,.1)}
+@media(max-width:760px){
+.app{display:block}
+aside{position:fixed;inset:auto 0 0 0;height:auto;z-index:10;border:0;border-top:1px solid var(--line);padding:6px 6px calc(6px + env(safe-area-inset-bottom,0px))}
+.brand{display:none}nav{flex-direction:row;justify-content:space-around}
+nav button{flex-direction:column;gap:0;padding:6px 8px;font-size:12px;border-radius:12px}
+nav button.mk{margin:0;padding:6px 14px}
+main{padding:24px 18px 110px}.hero{flex-direction:column;align-items:flex-start}.grid{grid-template-columns:1fr}.er{grid-template-columns:1fr 36px}.er input:nth-child(2){grid-column:1/2}.cr{grid-template-columns:1fr}
+}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+<div class="app">
+<aside><button class="brand" data-go="home" aria-label="PinkStudy home"><i class="logo" aria-hidden="true">✦</i>PinkStudy</button><nav id="nav" aria-label="Main"></nav></aside><button class="me" id="me" data-a="menu" aria-label="Profile menu" aria-haspopup="true" aria-expanded="false"></button><div class="menu" id="menu" role="menu"></div>
+<main id="page"></main>
+</div>
+<div class="toast" id="toast" role="status"></div>
+<script>
+const $=s=>document.querySelector(s);
+let S={sets:[],log:{},hist:[]},V={v:"home"},cl=null,st=null,z=null,tt;
+try{S=Object.assign(S,JSON.parse(localStorage.getItem("ps2")||"{}"))}catch(e){}
+const save=()=>{try{localStorage.setItem(window.SK||"ps2_nologin",JSON.stringify(S))}catch(e){toast("Couldn’t save in this browser.")}};
+const esc=s=>String(s??"").replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const sh=a=>[...a].sort(()=>Math.random()-.5);
+const gs=id=>S.sets.find(s=>s.id===id);
+const isDue=c=>!c.due||c.due<=Date.now();
+const day=o=>{const d=new Date();d.setDate(d.getDate()-o);return d.toLocaleDateString("en-CA")};
+const INT=[0,1,3,7,14];
+function toast(m){const t=$("#toast");t.textContent=m;t.classList.add("show");clearTimeout(tt);tt=setTimeout(()=>t.classList.remove("show"),2600)}
+function grade(c,ok){c.box=ok?Math.min((c.box||0)+1,4):0;c.due=Date.now()+(ok?INT[c.box]*864e5:0);S.log[day(0)]=(S.log[day(0)]||0)+1;save()}
+function streak(){let n=0,o=S.log[day(0)]?0:1;while(S.log[day(o)]){n++;o++}return n}
+const NAV=[["home","Home","⌂"],["dash","Dashboard","▦"]];
+function go(v,id){V={v,id};render()}
+function render(k){
+$("#nav").innerHTML=NAV.map(n=>`<button data-go="${n[0]}" class="${n[0]===V.v||(n[0]==="lib"&&V.v==="set")||(n[0]==="dash"&&window.DM)?"on":""} ${n[0]==="home"?"hm":""}"><span aria-hidden="true">${n[2]}</span>${n[1]}</button>`).join("");
+$("#page").innerHTML=({home,lib,set:setv,create,study:studyv,quiz:quizv,prog,ai:window.aiv,rev:window.revv,exp:window.expv,cfg:window.cfgv,imp:window.impv,ach:window.achv,info:window.infov,dash:window.dashv})[V.v]();if(!k)scrollTo(0,0)}
+const card=s=>{const k=s.cards.filter(c=>c.box>=3).length,d=s.cards.filter(isDue).length;return `<button class="set" data-open="${s.id}"><h3>${esc(s.title)}</h3><p>${s.cards.length} cards · ${d} due${s.subject?" · "+esc(s.subject):""}</p><div class="bar"><b style="width:${k/s.cards.length*100}%"></b></div><small style="color:var(--muted)">${k} remembered</small></button>`};
+function home(){const all=S.sets.flatMap(s=>s.cards),d=all.filter(isDue).length,k=all.filter(c=>c.box>=3).length;
+return `<h1>${S.sets.length?"Welcome back":"Welcome to PinkStudy"}</h1><p class="sub">Your personal space to learn, create, and master anything.</p>
+<div class="hero"><div><h2>${d?d+" card"+(d>1?"s":"")+" ready to review":S.sets.length?"You’re all caught up":"Make your first set"}</h2><p>${d?"A few minutes keeps your memory fresh.":S.sets.length?"Open a set to practice anyway.":"Paste your notes and PinkStudy turns them into flashcards."}</p></div><button class="btn" data-go="${d?"study":S.sets.length?"lib":"create"}">${d?"Start studying":S.sets.length?"Open library":"Create a set"}</button></div>
+<div class="stats"><div class="stat"><b>${streak()}</b><span>Day streak</span></div><div class="stat"><b>${k}</b><span>Cards remembered</span></div><div class="stat"><b>${S.sets.length}</b><span>Sets</span></div></div>
+${S.sets.length?`<h2>Recent sets</h2><div class="grid">${S.sets.slice(0,4).map(card).join("")}</div>`:""}`}
+const gridHtml=f=>{const l=S.sets.filter(s=>(s.title+" "+(s.subject||"")).toLowerCase().includes(f));return l.map(card).join("")||`<div class="empty" style="grid-column:1/-1">${S.sets.length?"No sets match your search.":"No sets yet. Select Create to make one."}</div>`};
+function lib(){return `<h1>Library</h1><p class="sub">Everything you’ve made, saved on this device.</p><input class="in" id="q" placeholder="Search your sets" aria-label="Search your sets"><div class="grid" id="grid">${gridHtml("")}</div>`}
+function setv(){const s=gs(V.id);if(!s)return lib();const d=s.cards.filter(isDue).length;
+return `<button class="link" data-go="lib">← Library</button><h1 style="margin-top:12px">${esc(s.title)}</h1><p class="sub">${s.cards.length} cards · ${d} due</p><div class="row2" style="margin-top:0"><button class="btn" data-a="sstudy">Study</button><button class="btn ghost" data-a="squiz">Take a quiz</button></div><div class="panel">${s.cards.map(c=>`<div class="cr"><b>${esc(c.t)}</b><span>${esc(c.d)}</span></div>`).join("")}</div><p class="hint"><button class="link" data-a="edit">Edit set</button> · <button class="link" data-a="del">Delete set</button></p>`}
+const rows=()=>cl.cards.map((c,i)=>`<div class="er"><input class="in" data-i="${i}" data-f="t" value="${esc(c.t)}" placeholder="Term" aria-label="Term ${i+1}"><input class="in" data-i="${i}" data-f="d" value="${esc(c.d)}" placeholder="Definition" aria-label="Definition ${i+1}"><button class="x" data-a="rm" data-i="${i}" aria-label="Remove card ${i+1}">×</button></div>`).join("");
+function newSet(){cl={title:"",cards:[{t:"",d:""},{t:"",d:""}]};go("create")}
+function create(){if(!cl)cl={title:"",cards:[{t:"",d:""},{t:"",d:""}]};
+return `<h1>${cl.id?"Edit set":"Create a set"}</h1><p class="sub">Type your cards, or paste notes and let PinkStudy make them.</p>
+<input class="in" id="ti" placeholder="Set title, e.g. Cell biology" maxlength="80" value="${esc(cl.title)}" aria-label="Set title"><input class="in" id="su" placeholder="Subject or folder (optional)" maxlength="40" value="${esc(cl.subject||"")}" aria-label="Subject" style="margin-top:10px">
+<div class="panel"><label for="src">Paste notes, or type cards as <code>term | definition</code></label><textarea class="in" id="src" rows="5" placeholder="Mitochondria | Makes energy for the cell"></textarea><div class="row2"><button class="btn ghost" data-a="make" id="mkb">Make cards</button><p class="hint" id="hint">Plain notes become cards with AI. Lines with | are used as written.</p></div></div>
+<div id="rows">${rows()}</div><div class="row2"><button class="link" data-a="add">+ Add a card</button></div><div class="err" id="err" role="alert"></div><button class="btn" data-a="save">Save set</button>`}
+async function make(){const t=$("#src").value.trim(),h=$("#hint"),b=$("#mkb");if(!t){h.textContent="Paste some notes first.";return}
+const ls=t.split("\n").filter(x=>x.trim()),pp=ls.map(l=>l.split("|").map(x=>x.trim())).filter(p=>p[0]&&p[1]);let cards=[];
+if(pp.length>=2&&pp.length*2>=ls.length)cards=pp.map(p=>({t:p[0],d:p.slice(1).join(" | ")}));
+else{b.disabled=true;h.textContent="Making cards…";
+try{const sm=window.claude&&await claude.use("sample");if(!sm)throw 0;
+const r=await sm.json("Turn these study notes into 8 to 15 flashcards. Return only a JSON array like [{\"t\":\"term or question\",\"d\":\"short answer\"}]. Keep answers under 25 words.\n\nNotes:\n"+t.slice(0,6000));
+cards=(Array.isArray(r)?r:r.cards||[]).filter(c=>c&&c.t&&c.d).map(c=>({t:String(c.t),d:String(c.d)}))}
+catch(e){h.textContent="AI isn’t available here. Type cards as term | definition instead.";b.disabled=false;return}
+b.disabled=false}
+if(!cards.length){h.textContent="No cards found. Try longer notes.";return}
+cl.cards=cl.cards.filter(c=>c.t||c.d).concat(cards);$("#rows").innerHTML=rows();$("#src").value="";h.textContent="Added "+cards.length+" cards. Edit them below, then save."}
+function startStudy(id){const pool=id?gs(id).cards:S.sets.flatMap(s=>s.cards);let q=pool.filter(isDue);if(!q.length&&id)q=[...pool];
+st=q.length?{q:sh(q),flip:0,ok:0,miss:0,n:q.length}:{empty:1};go("study")}
+function studyv(){if(!st||st.empty)return `<h1>Study</h1><div class="hero"><div><h2>You’re all caught up</h2><p>No cards are due right now. Open a set to practice anyway.</p></div><button class="btn" data-go="lib">Open library</button></div>`;
+if(!st.q.length)return `<h1>Session complete</h1><div class="hero"><div><h2>${st.ok} remembered, ${st.miss} to revisit</h2><p>Cards you missed come back sooner.</p></div><button class="btn" data-go="home">Done</button></div>`;
+const c=st.q[0];return `<div class="bar"><b style="width:${(st.n-st.q.length)/st.n*100}%"></b></div><p class="sub">${st.q.length} left</p><button class="flip ${st.flip?"f":""}" data-a="flip"><span>${esc(st.flip?c.d:c.t)}</span><small>${st.flip?"Answer":"Question"} · tap to flip</small></button><div class="row2 c"><button class="btn ghost" data-a="miss">Still learning</button><button class="btn" data-a="got">Got it</button></div><p class="hint" style="text-align:center">Keys: space flips · ← still learning · → got it</p>`}
+function startQuiz(id){const s=gs(id);z={id,i:0,sc:0,pk:null,done:0,qs:sh(s.cards).map(c=>({p:c.t,a:c.d,o:sh([c,...sh(s.cards.filter(x=>x!==c)).slice(0,3)]).map(x=>x.d)}))};go("quiz")}
+function quizv(){const s=gs(z.id);if(z.done)return `<h1>Quiz results</h1><div class="hero"><div><h2>${Math.round(z.sc/z.qs.length*100)}% · ${z.sc} of ${z.qs.length} correct</h2><p>${esc(s.title)}</p></div><button class="btn" data-a="retake">Retake quiz</button></div><button class="link" data-open="${s.id}">← Back to set</button>`;
+const q=z.qs[z.i];return `<div class="bar"><b style="width:${z.i/z.qs.length*100}%"></b></div><p class="sub">Question ${z.i+1} of ${z.qs.length}</p><h2 style="margin-bottom:18px">Which answer matches “${esc(q.p)}”?</h2>${q.o.map((o,i)=>`<button class="opt ${z.pk===null?"":o===q.a?"ok":i===z.pk?"bad":""}" data-a="pick" data-i="${i}" ${z.pk===null?"":"disabled"}>${esc(o)}</button>`).join("")}${z.pk===null?"":`<p>${q.o[z.pk]===q.a?"Correct.":"Not quite. The answer is shown in green."}</p><button class="btn" data-a="qnext">${z.i+1<z.qs.length?"Next question":"See results"}</button>`}`}
+function prog(){const all=S.sets.flatMap(s=>s.cards),k=all.filter(c=>c.box>=3).length,h=S.hist,acc=h.length?Math.round(h.reduce((a,x)=>a+x.sc/x.n,0)/h.length*100)+"%":"–";
+const ds=[6,5,4,3,2,1,0].map(o=>({l:new Date(Date.now()-o*864e5).toLocaleDateString("en",{weekday:"short"}),n:S.log[day(o)]||0})),mx=Math.max(1,...ds.map(d=>d.n));
+return `<h1>Progress</h1><p class="sub">Based on what you’ve actually studied on this device.</p><div class="stats"><div class="stat"><b>${streak()}</b><span>Day streak</span></div><div class="stat"><b>${k}/${all.length}</b><span>Cards remembered</span></div><div class="stat"><b>${acc}</b><span>Average quiz score</span></div></div>
+<div class="panel"><h3>Cards reviewed this week</h3><div class="chart">${ds.map(d=>`<div>${d.n||""}<i style="height:${d.n/mx*80}%"></i>${d.l}</div>`).join("")}</div></div>
+<div class="panel"><h3>Recent quizzes</h3>${h.slice(-5).reverse().map(x=>`<div class="cr"><b>${esc(x.t)}</b><span>${Math.round(x.sc/x.n*100)}% · ${QL[x.m]?QL[x.m]+" · ":""}${x.d}</span></div>`).join("")||`<p class="hint">No quizzes yet. Open a set and take one.</p>`}</div>`}
+function act(b){const a=b.dataset.a,i=+b.dataset.i,s=gs(V.id);
+if(a==="make")return make();
+if(a==="add"){cl.cards.push({t:"",d:""});$("#rows").innerHTML=rows();return}
+if(a==="rm"){cl.cards.splice(i,1);$("#rows").innerHTML=rows();return}
+if(a==="save"){const t=cl.title.trim(),cs=cl.cards.filter(c=>c.t.trim()&&c.d.trim()).map(c=>({...c,t:c.t.trim(),d:c.d.trim()})),e=$("#err");
+if(!t){e.textContent="Give your set a title.";return}if(cs.length<2){e.textContent="Add at least 2 cards with both a term and a definition.";return}
+const su=(cl.subject||"").trim();if(cl.id){const o=gs(cl.id);o.title=t;o.subject=su;o.cards=cs}else S.sets.unshift({id:Date.now().toString(36),title:t,subject:su,cards:cs});
+save();toast("Saved “"+t+"”");const id=cl.id||S.sets[0].id;cl=null;go("set",id);return}
+if(a==="sstudy")return startStudy(s.id);
+if(a==="squiz")return s.cards.length<2?toast("A quiz needs at least 2 cards."):startQuiz(s.id);
+if(a==="edit"){cl={id:s.id,title:s.title,subject:s.subject||"",cards:s.cards.map(c=>({...c}))};return go("create")}
+if(a==="del"){if(confirm("Delete “"+s.title+"”? This can’t be undone.")){S.sets=S.sets.filter(x=>x!==s);save();toast("Set deleted");go("lib")}return}
+if(a==="flip")st.flip=!st.flip;
+else if(a==="got"||a==="miss"){const c=st.q.shift();st.flip=0;if(a==="got"){st.ok++;grade(c,true)}else{st.miss++;grade(c,false);st.q.push(c)}}
+else if(a==="pick"){const q=z.qs[z.i];z.pk=i;if(q.o[i]===q.a)z.sc++}
+else if(a==="qnext"){if(z.i+1<z.qs.length){z.i++;z.pk=null}else{z.done=1;S.hist.push({t:gs(z.id).title,m:z.ty,sc:z.sc,n:z.qs.length,d:new Date().toLocaleDateString()});S.log[day(0)]=(S.log[day(0)]||0)+z.qs.length;save()}}
+else if(a==="retake")return startQuiz(z.id);
+render(1)}
+document.addEventListener("click",e=>{const g=e.target.closest("[data-go]"),o=e.target.closest("[data-open]"),a=e.target.closest("[data-a]");
+if(g){const v=g.dataset.go;if(v==="study")startStudy(null);else if(v==="create"){if(V.v!=="create"||!cl)newSet()}else go(v);return}
+if(o)return go("set",o.dataset.open);if(a)act(a)});
+document.addEventListener("input",e=>{const t=e.target;
+if(t.id==="ti")cl.title=t.value;else if(t.id==="su")cl.subject=t.value;else if(t.dataset.f)cl.cards[+t.dataset.i][t.dataset.f]=t.value;
+else if(t.id==="q")$("#grid").innerHTML=gridHtml(t.value.toLowerCase())});
+document.addEventListener("keydown",e=>{if(V.v!=="study"||!st||!st.q||!st.q.length||/INPUT|TEXTAREA/.test(e.target.tagName))return;
+const k={" ":"flip",ArrowRight:"got",ArrowLeft:"miss"}[e.key];if(k){e.preventDefault();act({dataset:{a:k}})}});
+render();
+</script>
+<style>
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:6px}
+.chip{padding:8px 16px;border-radius:99px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.13);color:var(--muted)}
+.chip.on{background:rgba(255,92,168,.25);color:var(--text);border-color:var(--pink)}
+textarea.in{resize:vertical}
+.split{display:grid;grid-template-columns:1.1fr 1fr;gap:20px;margin-bottom:20px}
+.herop{display:flex;align-items:center;gap:22px;margin:0}
+.art{flex:none;width:170px}.art svg,.art2 svg{display:block;width:100%;height:auto}
+.daily{margin:0;padding:0;overflow:hidden}
+.dh{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:18px 22px;background:rgba(16,13,20,.55)}
+.dh b{font:600 24px Poppins}.db{padding:20px 22px}.db label{margin:0 0 6px}.db p{margin:0 0 18px;font-size:17px}
+.sec{margin:32px 0 14px}.top2 h1{font-size:32px}
+.exg{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.ex{text-align:left;margin:0;padding:0 0 20px;border-radius:22px;overflow:hidden;transition:transform .2s,border-color .2s}
+.ex:hover{transform:translateY(-3px);border-color:var(--pink)}
+.ex h3{margin:16px 22px 4px;font-size:20px}.ex p{margin:0 22px;color:var(--muted);font-size:15px}
+.art2{height:150px;display:grid;place-items:center;background:radial-gradient(rgba(255,255,255,.4) 1px,transparent 1.6px) 0 0/30px 30px,linear-gradient(160deg,rgba(110,30,90,.75),rgba(40,18,48,.85))}
+.art2 svg{height:128px;width:auto}
+.me{width:40px;height:40px;border-radius:50%;background:linear-gradient(135deg,var(--pink),var(--accent));color:#1a0a13;display:grid;place-items:center;font:600 16px Poppins;flex:none}
+@media(min-width:761px){.app{display:block}aside{position:sticky;top:0;z-index:10;height:auto;display:flex;align-items:center;gap:16px;padding:12px 84px 12px 28px;border:0;border-bottom:1px solid rgba(255,255,255,.12);border-radius:0}.brand{padding:0;margin:0}nav{flex-direction:row;flex:1;justify-content:center;gap:2px}nav button{padding:8px 11px;border-radius:12px;font-size:14px;gap:7px}nav button.mk{margin:0 6px}main{max-width:1120px;padding:32px 28px 60px}}
+@media(min-width:761px) and (max-width:1060px){nav button{font-size:0;gap:0}nav button span{font-size:18px;width:26px}}
+@media(max-width:900px){.split,.exg{grid-template-columns:1fr}.herop{flex-direction:column;text-align:center}.art{width:150px}}
+.me{position:fixed;top:calc(12px + env(safe-area-inset-top,0px));right:22px;z-index:40;border:2px solid rgba(255,255,255,.25)}
+.av{width:46px;height:46px;border-radius:50%;background:linear-gradient(135deg,var(--pink),var(--accent));color:#1a0a13;display:grid;place-items:center;font:600 18px Poppins;flex:none}
+.menu{position:fixed;top:calc(62px + env(safe-area-inset-top,0px));right:18px;width:min(310px,calc(100vw - 36px));z-index:41;border-radius:20px;padding:8px;display:none;background:rgba(28,23,34,.85);-webkit-backdrop-filter:blur(22px);backdrop-filter:blur(22px);border:1px solid rgba(255,255,255,.15);box-shadow:0 16px 48px rgba(0,0,0,.5)}
+.menu.open{display:block}.mh{display:flex;align-items:center;gap:12px;padding:12px}.mh small{display:block;color:var(--muted)}
+.mi-sep{height:1px;background:var(--line);margin:6px 4px}
+.mi{display:flex;align-items:center;gap:14px;width:100%;padding:11px 12px;border-radius:12px;text-align:left}.mi:hover{background:rgba(255,255,255,.08)}.mi span{width:22px;text-align:center}
+:root[data-theme=light]{--bg:#FFF4FA;--surface:#fff;--card:#fff;--text:#2A1626;--muted:#7A5F72;--line:#EBCFE0;color-scheme:light}
+[data-theme=light] aside,[data-theme=light] .stat,[data-theme=light] .set,[data-theme=light] .panel,[data-theme=light] .in,[data-theme=light] .opt,[data-theme=light] .flip,[data-theme=light] .hero,[data-theme=light] .toast,[data-theme=light] .menu,[data-theme=light] .chip,[data-theme=light] .btn.ghost{background:rgba(255,255,255,.7);border-color:rgba(200,61,131,.22);box-shadow:0 8px 28px rgba(200,61,131,.12),inset 0 1px 0 #fff}
+[data-theme=light] .hero{background:linear-gradient(135deg,rgba(255,92,168,.22),rgba(255,255,255,.7))}
+[data-theme=light] .flip.f{background:linear-gradient(135deg,rgba(255,92,168,.25),rgba(255,255,255,.7))}
+[data-theme=light] .opt.ok{background:#dff6e8;border-color:#3fbf7f}[data-theme=light] .opt.bad{background:#fde0ee;border-color:var(--accent)}
+[data-theme=light] .dh{background:rgba(255,92,168,.16)}[data-theme=light] .bar{background:rgba(200,61,131,.12);border-color:rgba(200,61,131,.18)}
+[data-theme=light] .chip.on{background:rgba(255,92,168,.22)}
+[data-theme=light] nav button:hover,[data-theme=light] .mi:hover{background:rgba(200,61,131,.08)}[data-theme=light] nav button.on{background:rgba(255,92,168,.2)}
+[data-theme=light] body::before{background:radial-gradient(520px 420px at 10% 6%,rgba(255,92,168,.28),transparent 70%),radial-gradient(620px 520px at 92% 32%,rgba(255,156,203,.35),transparent 70%)}
+[data-theme=light] .me{border-color:rgba(200,61,131,.3)}
+@media(max-width:760px){nav{overflow-x:auto;justify-content:flex-start}nav button{flex:none}}
+</style>
+<script>
+S.revs=S.revs||[];
+const AI={summarize:["Summarize","Paste notes to get short bullet points."],explain:["Explain","Type a concept you find confusing."],reviewer:["Reviewer","Paste notes to get a structured reviewer."],plan:["Study plan","Describe your goal, e.g. “Pass my biology exam in 7 days”."],questions:["Questions","Paste notes to get practice questions with answers."],tutor:["Tutor","Ask any question and get a step-by-step answer."]};
+const PR={summarize:"Summarize these notes into clear bullet points a student can revise from.",explain:"Explain this concept simply, with one analogy and one example.",reviewer:"Turn these notes into a structured study reviewer with headings, key terms and bullet points.",plan:"Create a realistic day-by-day study plan for this goal. Keep each day to 2 or 3 short tasks.",questions:"Write 8 practice questions from these notes. After each, give the answer and a one-line explanation.",tutor:"You are a friendly tutor. Answer the student's question step by step, then ask one follow-up question to check understanding."};
+let A={tool:"summarize",inp:"",out:"",busy:0};
+async function ask(p){const sm=window.claude&&await claude.use("sample");if(!sm)throw 0;return (await sm(p)).text}
+function aiv(){return `<h1>AI Studio</h1><p class="sub">Pick a tool, add your text, then edit the result before saving. Flashcards are made on the Create page.</p><div class="chips">${Object.entries(AI).map(([k,v])=>`<button class="chip ${k===A.tool?"on":""}" data-a="tool" data-k="${k}">${v[0]}</button>`).join("")}</div><div class="panel"><label for="ain">${AI[A.tool][1]}</label><textarea class="in" id="ain" rows="6">${esc(A.inp)}</textarea><div class="row2"><button class="btn" data-a="gen" ${A.busy?"disabled":""}>${A.busy?"Working…":"Generate"}</button></div></div>${A.out?`<div class="panel"><label for="aout">Result (you can edit it)</label><textarea class="in" id="aout" rows="12">${esc(A.out)}</textarea><div class="row2"><button class="btn" data-a="asave">Save as reviewer</button></div></div>`:""}`}
+async function gen(){if(!A.inp.trim()){toast("Add some text first.");return}A.busy=1;render(1);try{A.out=await ask(PR[A.tool]+"\n\n"+A.inp.slice(0,6000))}catch(e){toast("AI isn’t available right now. Try again later.")}A.busy=0;render(1)}
+function revv(){if(V.id)return rdv();return `<h1>Reviewers</h1><p class="sub">Your notes and AI-made reviewers.</p><div class="row2" style="margin-top:0"><button class="btn" data-go="imp">Import lecture</button><button class="btn ghost" data-a="rnew">New reviewer</button></div><div class="grid">${S.revs.map(r=>`<button class="set" data-a="ropen" data-id="${r.id}"><h3>${esc(r.title)}</h3><p>${esc(r.body.slice(0,90))||"Empty"}</p></button>`).join("")||`<div class="empty" style="grid-column:1/-1">No reviewers yet. Write one, or generate one in AI Studio.</div>`}</div>`}
+function rdv(){const r=S.revs.find(x=>x.id===V.id);if(!r){V.id=null;return revv()}return `<button class="link" data-go="rev">← Reviewers</button><input class="in" id="rt" value="${esc(r.title)}" aria-label="Title" style="margin:12px 0"><textarea class="in" id="rb" rows="16" aria-label="Notes">${esc(r.body)}</textarea><div class="row2"><button class="btn" data-a="rsave">Save</button><button class="link" data-a="rdel">Delete</button></div>`}
+const EX=[{title:"Cell Biology Basics",subject:"Biology",cards:[["Mitochondria","Produces most of the cell’s ATP"],["Ribosome","Builds proteins from amino acids"],["Nucleus","Stores DNA and controls cell activity"],["Cell membrane","Controls what enters and leaves the cell"]]},{title:"Spanish Greetings",subject:"Languages",cards:[["Buenos días","Good morning"],["¿Cómo estás?","How are you?"],["Mucho gusto","Nice to meet you"],["Hasta luego","See you later"]]},{title:"Basic Derivatives",subject:"Math",cards:[["d/dx of x²","2x"],["d/dx of sin x","cos x"],["d/dx of eˣ","eˣ"],["d/dx of ln x","1/x"]]}];
+function expv(){return `<h1>Explore</h1><p class="sub">Sample public sets to try. Sharing sets between people needs accounts, which this version doesn’t have yet.</p><div class="grid">${EX.map((e,i)=>`<div class="set"><h3>${e.title}</h3><p>${e.subject} · ${e.cards.length} cards · Sample</p><button class="btn ghost" data-a="exadd" data-i="${i}">Add to my library</button></div>`).join("")}</div>`}
+function cfgv(){return `<h1>Settings</h1><p class="sub">Everything is stored on this device.</p><div class="panel"><label for="nm">Your name</label><input class="in" id="nm" maxlength="30" value="${esc(S.name||"")}" placeholder="e.g. Peter" style="margin-bottom:14px"><label for="gl">Daily goal (cards per day)</label><input class="in" id="gl" type="number" min="1" max="500" value="${S.goal||20}"><div class="row2"><button class="btn" data-a="gsave">Save settings</button></div></div><div class="panel"><b>Reset</b><p class="hint">Deletes all sets, reviewers and progress on this device.</p><button class="btn ghost" data-a="reset">Delete all my data</button></div>`}
+function startQuiz(id){const s=gs(id);z={id,i:0,sc:0,pk:null,done:0,qs:sh(s.cards).map((c,j)=>{const w=sh(s.cards.filter(x=>x!==c)),ty=j%3===1?"tf":j%3===2?"id":"mc";
+if(ty==="tf"){const f=Math.random()<.5&&w.length>0;return{ty,p:c.t,a:f?"False":"True",shown:f?w[0].d:c.d,o:["True","False"],real:c.d}}
+if(ty==="id")return{ty,p:c.d,a:c.t,o:[]};
+return{ty,p:c.t,a:c.d,o:sh([c,...w.slice(0,3)]).map(x=>x.d)}})};go("quiz")}
+function quizv(){const s=gs(z.id);if(z.done)return `<h1>Quiz results</h1><div class="hero"><div><h2>${Math.round(z.sc/z.qs.length*100)}% · ${z.sc} of ${z.qs.length} correct</h2><p>${esc(s.title)}</p></div><button class="btn" data-a="retake">Retake quiz</button></div><button class="link" data-open="${s.id}">← Back to set</button>`;
+const q=z.qs[z.i],ans=z.pk!==null;let body;
+if(q.ty==="id")body=ans?`<p><b>${z.ok?"Correct.":"Not quite."}</b> The answer is: ${esc(q.a)}</p>`:`<input class="in" id="idin" placeholder="Type your answer" aria-label="Your answer"><div class="row2"><button class="btn" data-a="chk">Check answer</button></div>`;
+else body=q.o.map((o,i)=>`<button class="opt ${!ans?"":o===q.a?"ok":i===z.pk?"bad":""}" data-a="pick" data-i="${i}" ${ans?"disabled":""}>${esc(o)}</button>`).join("")+(ans?`<p>${q.o[z.pk]===q.a?"Correct.":"Not quite."}${q.ty==="tf"&&q.a==="False"?" The real answer is: "+esc(q.real):""}</p>`:"");
+const title=q.ty==="tf"?`True or false: “${esc(q.p)}” means “${esc(q.shown)}”`:q.ty==="id"?`Type the term that matches: “${esc(q.p)}”`:`Which answer matches “${esc(q.p)}”?`;
+return `<div class="bar"><b style="width:${z.i/z.qs.length*100}%"></b></div><p class="sub">Question ${z.i+1} of ${z.qs.length} · ${{mc:"Multiple choice",tf:"True or false",id:"Identification"}[q.ty]}</p><h2 style="margin-bottom:18px">${title}</h2>${body}${ans?`<button class="btn" data-a="qnext">${z.i+1<z.qs.length?"Next question":"See results"}</button>`:""}`}
+const _act=act;
+act=function(b){const a=b.dataset.a,id=b.dataset.id;
+if(a==="tool"){A.tool=b.dataset.k;A.out="";return render(1)}
+if(a==="gen")return gen();
+if(a==="asave"){S.revs.unshift({id:Date.now().toString(36),title:AI[A.tool][0]+": "+A.inp.trim().slice(0,30),body:A.out});save();toast("Saved to Reviewers");return go("rev")}
+if(a==="rnew"){const n={id:Date.now().toString(36),title:"Untitled reviewer",body:""};S.revs.unshift(n);save();return go("rev",n.id)}
+if(a==="ropen")return go("rev",id);
+if(a==="rsave"){const r=S.revs.find(x=>x.id===V.id);r.title=$("#rt").value.trim()||"Untitled reviewer";r.body=$("#rb").value;save();return toast("Reviewer saved")}
+if(a==="rdel"){if(confirm("Delete this reviewer? This can’t be undone.")){S.revs=S.revs.filter(x=>x.id!==V.id);save();go("rev")}return}
+if(a==="exadd"){const e=EX[+b.dataset.i];S.sets.unshift({id:Date.now().toString(36),title:e.title,subject:e.subject,cards:e.cards.map(c=>({t:c[0],d:c[1]}))});save();return toast("Added “"+e.title+"” to your library")}
+if(a==="gsave"){const g=parseInt($("#gl").value,10);if(!(g>=1&&g<=500))return toast("Enter a goal between 1 and 500.");S.goal=g;S.name=($("#nm")?$("#nm").value:"").trim().slice(0,30);save();render(1);return toast("Settings saved")}
+if(a==="reset"){if(confirm("Delete all your data on this device? This can’t be undone.")){S={sets:[],log:{},hist:[],revs:[]};save();toast("All data deleted");go("home")}return}
+if(a==="chk"){const q=z.qs[z.i],n=s=>s.toLowerCase().replace(/[^a-z0-9 ]/g,"").trim(),v=n($("#idin").value||""),ok=!!v&&v===n(q.a);z.pk=1;z.ok=ok;if(ok)z.sc++;return render(1)}
+if(a==="hq"){const l=S.sets.find(x=>x.cards.length>=2);return l?startQuiz(l.id):newSet()}
+return _act(b)};
+const IMG={
+hero:`<svg viewBox="0 0 220 190" aria-hidden="true"><rect x="62" y="24" width="110" height="140" rx="12" fill="#C83D83" transform="rotate(6 115 94)"/><rect x="52" y="18" width="110" height="140" rx="12" fill="#FFF3F8"/><text x="107" y="56" text-anchor="middle" font-family="Poppins" font-weight="700" font-size="24" fill="#C83D83">QUIZ</text><path d="M72 82h68M72 104h68M72 126h50" stroke="#FF9CCB" stroke-width="6" stroke-linecap="round"/><circle cx="40" cy="66" r="17" fill="#FF5CA8"/><text x="40" y="73" text-anchor="middle" font-size="20" font-weight="700" fill="#fff">!</text><circle cx="176" cy="108" r="17" fill="#3fbf7f"/><text x="176" y="115" text-anchor="middle" font-size="20" font-weight="700" fill="#fff">?</text></svg>`,
+fc:`<svg viewBox="0 0 220 130" aria-hidden="true"><rect x="30" y="18" width="120" height="80" rx="12" fill="#3a1d33" stroke="#FF5CA8" stroke-width="3"/><rect x="62" y="34" width="124" height="84" rx="12" fill="#4a2240" stroke="#FF9CCB" stroke-width="3"/><rect x="82" y="52" width="32" height="26" rx="6" fill="#FF5CA8"/><rect x="82" y="88" width="84" height="6" rx="3" fill="#FF9CCB" opacity=".7"/><rect x="82" y="100" width="56" height="6" rx="3" fill="#FF9CCB" opacity=".4"/></svg>`,
+qz:`<svg viewBox="0 0 220 130" aria-hidden="true"><rect x="60" y="8" width="100" height="116" rx="12" fill="#FFF3F8"/><g fill="none" stroke="#C83D83" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"><path d="M76 38l7 7 13-14M76 68l7 7 13-14M76 98l7 7 13-14"/></g><path d="M108 38h38M108 68h38M108 98h26" stroke="#FF9CCB" stroke-width="6" stroke-linecap="round"/><circle cx="172" cy="30" r="14" fill="#FF5CA8"/></svg>`,
+ai:`<svg viewBox="0 0 220 130" aria-hidden="true"><rect x="40" y="20" width="140" height="86" rx="16" fill="#3a1d33" stroke="#FF5CA8" stroke-width="3"/><path d="M110 40l7 18 18 7-18 7-7 18-7-18-18-7 18-7z" fill="#FF9CCB"/><circle cx="62" cy="42" r="4" fill="#FF5CA8"/><circle cx="160" cy="88" r="5" fill="#FF5CA8"/><rect x="60" y="116" width="100" height="6" rx="3" fill="#FF9CCB" opacity=".4"/></svg>`};
+home=function(){
+const all=S.sets.flatMap(s=>s.cards),d=all.filter(isDue).length,k=all.filter(c=>c.box>=3).length,n=S.log[day(0)]||0,g=S.goal||20,nm=S.name||"there",last=S.sets[0];
+let dc,src=null;
+if(all.length){dc=all[Math.floor(Date.now()/864e5)%all.length];src=S.sets.find(x=>x.cards.includes(dc))}else dc={t:EX[0].cards[0][0],d:EX[0].cards[0][1]};
+return `<div class="top2"><h1>Welcome, ${esc(nm)}</h1><p class="sub">${d?"You have "+d+" card"+(d>1?"s":"")+" to review today.":S.sets.length?"You’re all caught up for today.":"Let’s make your first set in under a minute."}</p></div>
+<section class="split"><div class="panel herop"><div class="art">${IMG.hero}</div><div><h2>${d?"Learn & Repeat":"Make your first set"}</h2><p class="hint" style="margin:8px 0 16px">${d?"Review the cards that are due. Cards you miss come back sooner, so the hard ones stick.":"Paste your notes and PinkStudy turns them into flashcards you can study and be quizzed on."}</p><button class="btn" data-go="${d?"study":"create"}">${d?"Start · "+d+" due":"Create a set"}</button></div></div>
+<div class="panel daily"><div class="dh"><b>${esc(dc.t)}</b><span class="hint">${all.length?"Card of the day":"Sample card"}</span></div><div class="db"><label>Answer</label><p>${esc(dc.d)}</p>${src?`<button class="link" data-open="${src.id}">From “${esc(src.title)}” ↗</button>`:`<button class="link" data-go="exp">Browse sample sets ↗</button>`}</div></div></section>
+<div class="stats"><div class="stat"><b>${streak()}</b><span>Day streak</span></div><div class="stat"><b>${k}</b><span>Cards remembered</span></div><div class="stat"><b>${n}/${g}</b><span>Cards today</span><div class="bar" style="margin:8px 0 0"><b style="width:${Math.min(100,n/g*100)}%"></b></div></div></div>
+<h2 class="sec">Exercises</h2><div class="exg">
+<button class="ex panel" data-go="study"><div class="art2">${IMG.fc}</div><h3>Flashcards</h3><p>${d?d+" cards due now. Flip, answer, repeat.":"Study any set. Flip cards and track what you know."}</p></button>
+<button class="ex panel" data-a="hq"><div class="art2">${IMG.qz}</div><h3>Quiz</h3><p>${last&&last.cards.length>1?"Test yourself on “"+esc(last.title)+"”.":"Create a set first, then test yourself."}</p></button>
+<button class="ex panel" data-go="ai"><div class="art2">${IMG.ai}</div><h3>AI Studio</h3><p>Turn notes into summaries, reviewers and practice questions.</p></button></div>
+${S.sets.length?`<h2 class="sec">Your sets</h2><div class="grid">${S.sets.slice(0,4).map(card).join("")}</div>`:""}`};
+const _r=render;render=function(k){_r(k);const m=$("#me");if(m)m.textContent=((S.name||"P").trim()[0]||"P").toUpperCase()};
+document.addEventListener("input",e=>{if(e.target.id==="ain")A.inp=e.target.value;else if(e.target.id==="aout")A.out=e.target.value});
+let M={text:"",name:"",out:"",terms:[],stats:"",busy:0};
+const wc=()=>(M.text.trim().match(/\S+/g)||[]).length;
+const setMsg=t=>{const e=$("#lm");if(e)e.textContent=t};
+const nz=s=>String(s||"").toLowerCase().replace(/[^\p{L}\p{N} ]+/gu," ").replace(/\s+/g," ").trim();
+const loadJs=u=>new Promise((res,rej)=>{const e=document.createElement("script");e.src=u;e.onload=res;e.onerror=rej;document.head.appendChild(e)});
+async function readFile(f){const x=f.name.toLowerCase().split(".").pop();
+if(x==="txt"||x==="md")return await f.text();
+if(x==="srt"||x==="vtt"){const g=parseCaps(await f.text());if(!g.length)throw 0;M.segs=g;return g.map(a=>a.s).join("\n")}
+if(x==="docx"){if(!window.mammoth)await loadJs("https://cdnjs.cloudflare.com/ajax/libs/mammoth/1.4.2/mammoth.browser.min.js");return (await mammoth.extractRawText({arrayBuffer:await f.arrayBuffer()})).value}
+if(x==="pdf"){if(!window.pdfjsLib){await loadJs("https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js");pdfjsLib.GlobalWorkerOptions.workerSrc="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js"}
+const d=await pdfjsLib.getDocument({data:await f.arrayBuffer()}).promise;let t="";for(let i=1;i<=d.numPages;i++){const c=await(await d.getPage(i)).getTextContent();t+=c.items.map(a=>a.str).join(" ")+"\n\n"}return t}
+throw 0}
+function chunk(t){const out=[];let cur="";for(const p of t.replace(/\r/g,"").split(/\n+|(?<=[.!?])\s+/)){if((cur+" "+p).length>3500&&cur){out.push(cur);cur=p}else cur+=(cur?" ":"")+p}if(cur.trim())out.push(cur);return out}
+const ft=s=>{const h=Math.floor(s/3600),m=Math.floor(s%3600/60),c=Math.floor(s%60);return (h?h+":"+String(m).padStart(2,"0"):m)+":"+String(c).padStart(2,"0")};
+function parseCaps(raw){const segs=[];for(const b of raw.replace(/\r/g,"").split(/\n\n+/)){const m=b.match(/(?:(\d+):)?(\d{1,2}):(\d{2})[.,]\d{3}\s*-->/);if(!m)continue;
+const txt=b.split("\n").filter(l=>!/-->/.test(l)&&!/^\d+$/.test(l.trim())&&!/^(WEBVTT|NOTE|Kind:|Language:)/.test(l)).join(" ").replace(/<[^>]+>/g,"").replace(/&amp;/g,"&").replace(/\s+/g," ").trim();
+if(txt)segs.push({t:(+m[1]||0)*3600+(+m[2])*60+(+m[3]),s:txt})}
+return segs.filter((x,i)=>!i||x.s!==segs[i-1].s)}
+function fromTimed(t){const segs=[];let cur=null,n=0;for(const l of t.replace(/\r/g,"").split("\n")){const m=l.trim().match(/^(?:(\d+):)?(\d{1,2}):(\d{2})$/);if(m){n++;cur={t:(+m[1]||0)*3600+(+m[2])*60+(+m[3]),s:""};segs.push(cur)}else if(cur&&l.trim())cur.s+=(cur.s?" ":"")+l.trim()}
+const r=segs.filter(x=>x.s);return n>=5&&r.length?r:null}
+function impv(){return `<button class="link" data-go="rev">← Reviewers</button><h1 style="margin-top:12px">Import a lecture or video</h1><p class="sub">Upload a file or paste the lecture. The reviewer uses only what your lecture says, and every point is checked against the original text.</p>
+<div class="panel"><label for="lf">Upload a lecture file (.pdf, .docx, .txt, .md) or video captions (.srt, .vtt)</label><input type="file" id="lf" class="in" accept=".pdf,.docx,.txt,.md,.srt,.vtt"><details style="margin-top:10px;color:var(--muted);font-size:14px"><summary style="cursor:pointer;color:var(--lpink)">Importing a video?</summary><p>PinkStudy can’t download videos or open video links, but a transcript works just as well, and the reviewer will show timestamps so you can jump back to the moment.</p><p><b>YouTube:</b> open the video, choose Show transcript in the description, copy it all and paste it below.<br><b>Zoom, Teams or Google Meet:</b> download the transcript (.vtt) and upload it here.<br><b>A video file only:</b> create captions with your video app first, then upload the .srt.</p></details><label for="lt" style="margin-top:14px">Or paste the lecture text</label><textarea class="in" id="lt" rows="8" placeholder="Paste your lecture notes or transcript here">${esc(M.text)}</textarea><p class="hint" id="lw" style="margin-top:6px">${wc()} words</p><label for="ln" style="margin-top:12px">Reviewer title</label><input class="in" id="ln" maxlength="80" placeholder="e.g. Week 3: Cell division" value="${esc(M.name)}"><div class="row2"><button class="btn" data-a="build" ${M.busy?"disabled":""}>${M.busy?"Building…":"Build reviewer"}</button><p class="hint" id="lm"></p></div></div>
+${M.out?`<div class="panel"><b>${esc(M.stats)}</b><p class="hint" style="margin:6px 0 12px">Points marked [check] couldn’t be matched to your lecture. Fix or delete them, then save.</p><textarea class="in" id="lo" rows="16" aria-label="Reviewer (editable)">${esc(M.out)}</textarea><div class="row2"><button class="btn" data-a="isave">Save reviewer</button>${M.terms.length>1?`<button class="btn ghost" data-a="icards">Make ${M.terms.length} flashcards from key terms</button>`:""}</div></div>`:""}`}
+async function build(){const text=M.text.trim();if(M.busy)return;
+if(text.split(/\s+/).length<40){toast("Add at least a paragraph of lecture text first.");return}
+const segs=M.segs&&M.segs.length?M.segs:fromTimed(text),parts=chunk(segs?segs.map(x=>x.s).join(" "):text),use=parts.slice(0,12),src=segs?segs.map(x=>nz(x.s)).join(" "):nz(text),offs=[];
+if(segs){let o=0;for(const x of segs){offs.push(o);o+=nz(x.s).length+1}}
+const when=q=>{if(!offs.length)return"";const i=src.indexOf(nz(q));if(i<0)return"";let k=0;while(k+1<offs.length&&offs[k+1]<=i)k++;return "("+ft(segs[k].t)+") "};M.busy=1;M.out="";render(1);
+const secs=[],terms=new Map();let tot=0,good=0,skip=0;
+for(let i=0;i<use.length;i++){setMsg("Reading part "+(i+1)+" of "+use.length+"…");
+try{const sm=window.claude&&await claude.use("sample");if(!sm)throw 0;
+const r=await sm.json("You are making a study reviewer from one part of a lecture. Use ONLY the text below. Do not add outside facts, examples or definitions. If the text does not define something, do not invent a definition.\nReturn only JSON: {\"sections\":[{\"heading\":\"short topic\",\"points\":[{\"text\":\"clear study point in your own words\",\"quote\":\"an exact phrase of 5 to 12 words copied from the text that supports the point\"}]}],\"terms\":[{\"term\":\"\",\"definition\":\"\",\"quote\":\"exact phrase copied from the text\"}]}\nRules: at most 4 sections, 3 to 8 points each. Only include terms the lecture explicitly defines or explains.\n\nLecture part:\n"+use[i]);
+for(const s of r.sections||[]){const h=String(s.heading||"Notes").trim();let g=secs.find(x=>x.h.toLowerCase()===h.toLowerCase());if(!g){g={h,p:[]};secs.push(g)}
+for(const p of s.points||[]){if(!p||!p.text)continue;tot++;const v=nz(p.quote).length>=8&&src.includes(nz(p.quote));if(v)good++;g.p.push((v?when(p.quote):"")+String(p.text).trim()+(v?"":" [check]"))}}
+for(const t of r.terms||[]){if(!t||!t.term||!t.definition)continue;const k=String(t.term).toLowerCase();if(!terms.has(k))terms.set(k,{t:String(t.term).trim(),d:String(t.definition).trim(),v:nz(t.quote).length>=8&&src.includes(nz(t.quote))})}}
+catch(e){skip++;if(i===0&&!M.out&&skip===1&&e===0){M.busy=0;render(1);toast("AI isn’t available right now. Try again later.");return}}}
+M.busy=0;
+if(!tot){render(1);toast("Couldn’t build a reviewer from this text. Try a clearer or longer lecture.");return}
+const tl=[...terms.values()];M.terms=tl.filter(x=>x.v).map(x=>({t:x.t,d:x.d}));
+M.out="# "+(M.name.trim()||"Lecture reviewer")+"\n\n"+secs.filter(s=>s.p.length).map(s=>"## "+s.h+"\n"+s.p.map(x=>"- "+x).join("\n")).join("\n\n")+(tl.length?"\n\n## Key terms\n"+tl.map(x=>"- **"+x.t+"**: "+x.d+(x.v?"":" [check]")).join("\n"):"");
+M.stats=good+" of "+tot+" points matched your lecture text."+(skip?" "+skip+" part"+(skip>1?"s":"")+" couldn’t be read.":"")+(parts.length>12?" Only the first 12 parts were used.":"");
+render(1)}
+document.addEventListener("input",e=>{const t=e.target;if(t.id==="lt"){M.text=t.value;M.segs=null;const w=$("#lw");if(w)w.textContent=wc()+" words"}else if(t.id==="ln")M.name=t.value;else if(t.id==="lo")M.out=t.value});
+document.addEventListener("change",async e=>{if(e.target.id!=="lf")return;const f=e.target.files[0];if(!f)return;
+if(f.size>15e6){setMsg("That file is over 15 MB. Paste the text instead.");return}
+M.segs=null;setMsg("Reading file…");try{M.text=await readFile(f)}catch(x){setMsg("Couldn’t read that file. Paste the text instead.");return}
+if(!M.name)M.name=f.name.replace(/\.[^.]+$/,"");$("#lt").value=M.text;$("#ln").value=M.name;$("#lw").textContent=wc()+" words";setMsg(M.text.trim()?"File loaded. Check the text, then build.":"No text found. This may be a scanned file. Paste the text instead.")});
+const _act2=act;
+act=function(b){const a=b.dataset.a;
+if(a==="build")return build();
+if(a==="isave"){S.revs.unshift({id:Date.now().toString(36),title:(M.name.trim()||"Lecture reviewer"),body:M.out});save();toast("Reviewer saved");M.out="";return go("rev")}
+if(a==="icards"){S.sets.unshift({id:Date.now().toString(36),title:(M.name.trim()||"Lecture")+" key terms",subject:"",cards:M.terms.map(x=>({...x}))});save();return toast("Made "+M.terms.length+" flashcards. Find them in your Library.")}
+return _act2(b)};
+document.documentElement.dataset.theme=S.theme||"dark";
+const ini=()=>((S.name||"P").trim()[0]||"P").toUpperCase();
+function menuHtml(){const l=S.theme==="light";return `<div class="mh"><div class="av" aria-hidden="true">${ini()}</div><div><b>${esc(S.name||"Learner")}</b><small>Saved on this device</small></div></div><div class="mi-sep"></div><button class="mi" data-go="ach"><span aria-hidden="true">🏆</span>Achievements</button><button class="mi" data-go="cfg"><span aria-hidden="true">⚙</span>Settings</button><button class="mi" data-a="theme"><span aria-hidden="true">${l?"🌙":"☀"}</span>${l?"Dark mode":"Light mode"}</button><div class="mi-sep"></div><button class="mi" data-a="privacy">Privacy policy</button><button class="mi" data-a="help">Help and feedback</button>`}
+function closeMenu(){$("#menu").classList.remove("open");$("#me").setAttribute("aria-expanded","false")}
+function achv(){const rv=Object.values(S.log).reduce((a,b)=>a+b,0),kn=S.sets.flatMap(s=>s.cards).filter(c=>c.box>=3).length,st=streak();
+const L=[["🌱","First set","Create a set",S.sets.length,1],["📝","Note taker","Save a reviewer",S.revs.length,1],["⚡","Warm-up","Review 25 cards",rv,25],["🔥","Dedicated","Review 100 cards",rv,100],["🧠","Memory builder","Remember 50 cards",kn,50],["🎯","Quiz taker","Finish a quiz",S.hist.length,1],["💯","Perfect score","Score 100% on a quiz of 3+ questions",S.hist.filter(h=>h.n>=3&&h.sc===h.n).length,1],["📅","3-day streak","Study 3 days in a row",st,3],["🏆","Week warrior","Study 7 days in a row",st,7]];
+const u=L.filter(x=>x[3]>=x[4]).length;
+return `<h1>Achievements</h1><p class="sub">${u} of ${L.length} unlocked. Earned from what you actually study.</p><div class="grid">${L.map(x=>{const ok=x[3]>=x[4];return `<div class="set" style="${ok?"border-color:var(--pink)":"opacity:.65"}"><h3>${x[0]} ${x[1]}</h3><p>${x[2]}</p><div class="bar"><b style="width:${Math.min(100,x[3]/x[4]*100)}%"></b></div><small class="hint">${ok?"Unlocked":Math.min(x[3],x[4])+" of "+x[4]}</small></div>`}).join("")}</div>`}
+function infov(){const p=V.id==="privacy";return `<h1 style="margin-bottom:16px">${p?"Privacy policy":"Help and feedback"}</h1>`+(p?`<div class="panel"><p>PinkStudy saves your sets, reviewers and progress in this browser, on this device. Accounts are created on this device only, and passwords are stored as salted hashes here. There is no server that stores your study data or passwords.</p><p>When you use an AI tool or import a lecture, the text you submit is sent to Claude to produce the result. Nothing else leaves this device.</p><p>Clearing your browser data, or choosing Delete all my data in Settings, erases everything for good.</p></div>`:`<div class="panel"><p><b>Make a set:</b> Create, then type cards or paste notes and press Make cards.</p><p><b>Import a lecture:</b> Reviewers, then Import lecture. Upload a file or video captions.</p><p><b>Study:</b> Study reviews cards that are due. Space flips, ← still learning, → got it.</p><p><b>Quiz:</b> Open Quiz on the Dashboard (or a set), pick a set, then choose Multiple choice, True or false, Identification, or Random mix.</p><p><b>Feedback:</b> Tell Claude in the chat what you’d like changed, and it can update this page.</p></div>`)}
+const _act3=act;
+act=function(b){const a=b.dataset.a;
+if(a==="menu"){const m=$("#menu"),o=!m.classList.contains("open");m.innerHTML=menuHtml();m.classList.toggle("open",o);$("#me").setAttribute("aria-expanded",String(o));return}
+if(a==="theme"){S.theme=S.theme==="light"?"dark":"light";document.documentElement.dataset.theme=S.theme;save();closeMenu();return}
+if(a==="privacy"||a==="help"){closeMenu();return go("info",a)}
+return _act3(b)};
+document.addEventListener("click",e=>{if(e.target.closest(".mi"))closeMenu();else if(!e.target.closest("#menu,#me"))closeMenu()});
+document.addEventListener("keydown",e=>{if(e.key==="Escape")closeMenu()});
+
+
+const QL={random:"Random mix",mc:"Multiple choice",tf:"True or false",id:"Identification"};
+window.dashv=function(){
+const all=S.sets.flatMap(s=>s.cards),d=all.filter(isDue).length,k=all.filter(c=>c.box>=3).length,n=S.log[day(0)]||0,g=S.goal||20,nm=S.name||"there",h=S.hist,acc=h.length?Math.round(h.reduce((a,x)=>a+x.sc/x.n,0)/h.length*100)+"%":"–";
+let dc,src=null;
+if(all.length){dc=all[Math.floor(Date.now()/864e5)%all.length];src=S.sets.find(x=>x.cards.includes(dc))}else dc={t:EX[0].cards[0][0],d:EX[0].cards[0][1]};
+const ds=[6,5,4,3,2,1,0].map(o=>({l:new Date(Date.now()-o*864e5).toLocaleDateString("en",{weekday:"short"}),n:S.log[day(o)]||0})),mx=Math.max(1,...ds.map(x=>x.n));
+return `<div class="top2"><h1>Dashboard</h1><p class="sub">Hi ${esc(nm)}. ${d?"You have "+d+" card"+(d>1?"s":"")+" to review today.":S.sets.length?"You’re all caught up for today.":"Let’s make your first set in under a minute."}</p></div>
+<section class="split"><div class="panel herop"><div class="art">${IMG.hero}</div><div><h2>${d?"Learn & Repeat":"Make your first set"}</h2><p class="hint" style="margin:8px 0 16px">${d?"Review the cards that are due. Cards you miss come back sooner, so the hard ones stick.":"Paste your notes and PinkStudy turns them into flashcards you can study and be quizzed on."}</p><button class="btn" data-go="${d?"study":"create"}">${d?"Start · "+d+" due":"Create a set"}</button></div></div>
+<div class="panel daily"><div class="dh"><b>${esc(dc.t)}</b><span class="hint">${all.length?"Card of the day":"Sample card"}</span></div><div class="db"><label>Answer</label><p>${esc(dc.d)}</p>${src?`<button class="link" data-open="${src.id}">From “${esc(src.title)}” ↗</button>`:`<button class="link" data-go="exp">Browse sample sets ↗</button>`}</div></div></section>
+<div class="stats"><div class="stat"><b>${streak()}</b><span>Day streak</span></div><div class="stat"><b>${k}</b><span>Cards remembered</span></div><div class="stat"><b>${n}/${g}</b><span>Cards today</span><div class="bar" style="margin:8px 0 0"><b style="width:${Math.min(100,n/g*100)}%"></b></div></div><div class="stat"><b>${S.sets.length}</b><span>Sets</span></div><div class="stat"><b>${h.length}</b><span>Quizzes taken</span></div><div class="stat"><b>${acc}</b><span>Average quiz score</span></div></div>
+<h2 class="sec">Exercises</h2><div class="exg">
+<button class="ex panel" data-go="study"><div class="art2">${IMG.fc}</div><h3>Flashcards</h3><p>${d?d+" cards due now. Flip, answer, repeat.":"Study any set. Flip cards and track what you know."}</p></button>
+<button class="ex panel" data-a="hq"><div class="art2">${IMG.qz}</div><h3>Quiz</h3><p>Multiple choice, true or false, identification, or a random mix.</p></button>
+<button class="ex panel" data-go="ai"><div class="art2">${IMG.ai}</div><h3>AI Studio</h3><p>Turn notes into summaries, reviewers and practice questions.</p></button></div>
+<div class="split" style="margin-top:32px"><div class="panel" style="margin:0"><h3>Cards reviewed this week</h3><div class="chart">${ds.map(x=>`<div>${x.n||""}<i style="height:${x.n/mx*80}%"></i>${x.l}</div>`).join("")}</div></div><div class="panel" style="margin:0"><h3>Recent quizzes</h3>${h.slice(-3).reverse().map(x=>`<div class="cr"><b>${esc(x.t)}</b><span>${Math.round(x.sc/x.n*100)}% · ${QL[x.m]?QL[x.m]+" · ":""}${x.d}</span></div>`).join("")||`<p class="hint">No quizzes yet. Open Quiz to try one.</p>`}</div></div>
+${S.sets.length?`<h2 class="sec">Your sets</h2><div class="grid">${S.sets.slice(0,4).map(card).join("")}</div>`:""}
+${S.revs.length?`<h2 class="sec">Recent reviewers</h2><div class="grid">${S.revs.slice(0,2).map(r=>`<button class="set" data-a="ropen" data-id="${r.id}"><h3>${esc(r.title)}</h3><p>${esc(r.body.slice(0,90))||"Empty"}</p></button>`).join("")}</div>`:""}`};
+function openQuiz(id){const el=S.sets.filter(x=>x.cards.length>=2);if(!el.length){toast("Make a set with at least 2 cards first.");return newSet()}
+z={setup:1,id:id||(z&&gs(z.id)?z.id:el[0].id),ty:(z&&z.ty)||"random",cnt:(z&&z.cnt)||0};go("quiz")}
+function qsetup(){const el=S.sets.filter(x=>x.cards.length>=2),s=el.find(x=>x.id===z.id)||el[0];z.id=s.id;
+const T=[["random","🎲","Random mix","A bit of everything"],["mc","▦","Multiple choice","Pick the matching answer"],["tf","✓","True or false","Is the pair correct?"],["id","✎","Identification","Type the answer yourself"]];
+return `<button class="link" data-go="dash">← Dashboard</button><h1 style="margin-top:12px">Take a quiz</h1><p class="sub">Choose a set and a question type.</p>
+<div class="panel"><label>Set</label><div class="chips">${el.map(x=>`<button class="chip ${x.id===s.id?"on":""}" data-a="qset" data-id="${x.id}">${esc(x.title)}</button>`).join("")}</div></div>
+<div class="grid">${T.map(x=>`<button class="set ${x[0]===z.ty?"on":""}" data-a="qty" data-k="${x[0]}" aria-pressed="${x[0]===z.ty}"><h3>${x[1]} ${x[2]}</h3><p>${x[3]}</p></button>`).join("")}</div>
+<div class="panel"><label>Number of questions (max 100)</label><div class="chips">${[5,10,20,50,100,0].map(c=>`<button class="chip ${(z.cnt||0)===c?"on":""}" data-a="qcnt" data-k="${c}">${c||"All "+Math.min(s.cards.length,100)}</button>`).join("")}</div><div class="row2" style="margin-bottom:0"><input class="in" id="qn" type="number" min="1" max="100" inputmode="numeric" placeholder="Custom, 1 to 100" aria-label="Custom number of questions" style="width:200px" value="${[0,5,10,20,50,100].includes(z.cnt||0)?"":z.cnt}">${(z.cnt||0)>s.cards.length?`<span class="hint">This set has ${s.cards.length} cards, so some will repeat.</span>`:""}</div></div><div class="row2"><button class="btn" id="qstart" data-a="qgo">Start quiz · ${Math.min(z.cnt||s.cards.length,100)} questions</button></div>`}
+function runQuiz(){const s=gs(z.id),ty=z.ty||"random",n=Math.min(z.cnt||s.cards.length,100),tp=sh(Array.from({length:n},(_,j)=>["mc","tf","id"][j%3]));let order=[];while(order.length<n){const r=sh(s.cards);if(order.length&&r[0]===order[order.length-1])r.push(r.shift());order=order.concat(r)}order=order.slice(0,n);
+z={id:s.id,ty,cnt:z.cnt,i:0,sc:0,pk:null,done:0,qs:order.map((c,j)=>{const w=sh(s.cards.filter(x=>x!==c)),t=ty==="random"?tp[j]:ty;
+if(t==="tf"){const f=Math.random()<.5&&w.length>0;return{ty:t,p:c.t,a:f?"False":"True",shown:f?w[0].d:c.d,o:["True","False"],real:c.d}}
+if(t==="id")return{ty:t,p:c.d,a:c.t,o:[]};
+return{ty:t,p:c.t,a:c.d,o:sh([c,...w.slice(0,3)]).map(x=>x.d)}})};go("quiz")}
+const _qv=quizv;quizv=function(){if(z&&z.setup)return qsetup();let h=_qv();if(z.done){const m=z.miss||[];
+h+=(m.length?`<h2 class="sec">Review your misses</h2>`+m.map(x=>`<div class="panel" style="margin:10px 0"><b>${esc(x.q.ty==="id"?"Type the term for: "+x.q.p:x.q.ty==="tf"?x.q.p+" = "+x.q.shown:x.q.p)}</b><p class="hint" style="margin:6px 0 0">Your answer: ${esc(x.got||"(blank)")} · Correct: ${esc(x.q.ty==="tf"?x.q.a+(x.q.a==="False"?" ("+x.q.real+")":""):x.q.a)}</p></div>`).join(""):`<p class="hint" style="margin-top:14px">No mistakes. Perfect round.</p>`)+`<div class="row2">${m.length?`<button class="btn" data-a="qretry">Retry ${m.length} missed</button>`:""}<button class="btn ghost" data-a="qsetup">Change quiz type</button></div>`}return h};
+const _act4=act;
+act=function(b){const a=b.dataset.a;
+if(a==="hq")return openQuiz();
+if(a==="squiz"){const s=gs(V.id);return s.cards.length<2?toast("A quiz needs at least 2 cards."):openQuiz(s.id)}
+if(a==="qset"){z.id=b.dataset.id;return render(1)}
+if(a==="qty"){z.ty=b.dataset.k;return render(1)}
+if(a==="qgo")return runQuiz();
+if(a==="retake")return runQuiz();
+if(a==="qsetup"){z.setup=1;return render(1)}
+return _act4(b)};
+const QA=[["dash","▦","Overview"],["study","❏","Study"],["hq","?","Quiz"],["create","+","Create a set"],["ai","✦","AI Studio"],["rev","☰","Reviewers"],["imp","⇪","Import lecture"],["lib","▤","Library"],["exp","◎","Explore"],["prog","↗","Progress"],["ach","🏆","Achievements"],["cfg","⚙","Settings"],["home","⌂","Home"]];
+window.DM=false;let LV=null;
+const _go=go;go=function(v,id){if(v==="dash")window.DM=true;else if(v==="home")window.DM=false;_go(v,id)};
+const _r2=render;render=function(k){_r2(k);const pg=$("#page");
+if(window.DM&&V.v!=="home"){const on=x=>x===V.v||(x==="lib"&&V.v==="set")||(x==="hq"&&V.v==="quiz");
+pg.innerHTML=`<div class="dsh"><div class="dq" role="navigation" aria-label="Quick access"><h3>Quick access</h3>${QA.map(x=>`<button class="${on(x[0])?"on":""}" ${x[0]==="hq"?'data-a="hq"':'data-go="'+x[0]+'"'}><span aria-hidden="true">${x[1]}</span>${x[2]}</button>`).join("")}</div><section class="pop ${LV!==V.v?"in":""}">${pg.innerHTML}</section></div>`}
+LV=V.v};
+const b64=b=>btoa(String.fromCharCode(...new Uint8Array(b))),ub=s=>Uint8Array.from(atob(s),c=>c.charCodeAt(0)),UK=id=>"ps2_u_"+id;
+async function hp(pw,salt){const k=await crypto.subtle.importKey("raw",new TextEncoder().encode(pw),"PBKDF2",false,["deriveBits"]);return b64(await crypto.subtle.deriveBits({name:"PBKDF2",hash:"SHA-256",salt,iterations:150000},k,256))}
+const accts=()=>{try{return JSON.parse(localStorage.getItem("ps_accts")||"{}")}catch(e){return{}}},saveAccts=a=>localStorage.setItem("ps_accts",JSON.stringify(a));
+let AT="in",AF=0,AL=0;
+const blank=()=>({sets:[],log:{},hist:[],revs:[]});
+function authRender(){document.body.classList.add("au");const up=AT==="up";
+$("#page").innerHTML=`<section class="auth panel"><i class="logo" aria-hidden="true">✦</i><h1>PinkStudy</h1><p class="sub">${up?"Create your account to start studying.":"Log in to open your study space."}</p><div class="chips"><button class="chip ${up?"":"on"}" data-a="atab" data-k="in">Log in</button><button class="chip ${up?"on":""}" data-a="atab" data-k="up">Sign up</button></div>
+<label for="au_u">Username</label><input class="in" id="au_u" autocomplete="username" maxlength="20" autocapitalize="none" spellcheck="false">
+<label for="au_p" style="margin-top:12px">Password</label><input class="in" id="au_p" type="password" autocomplete="${up?"new-password":"current-password"}">
+${up?`<label for="au_c" style="margin-top:12px">Confirm password</label><input class="in" id="au_c" type="password" autocomplete="new-password">`:""}
+<label style="display:flex;align-items:center;gap:8px;margin:14px 0"><input type="checkbox" id="au_k" checked> Keep me logged in on this device</label>
+<div class="err" id="au_e" role="alert"></div><button class="btn" style="width:100%" data-a="${up?"asignup":"alogin"}">${up?"Create account":"Log in"}</button>
+<p class="hint" style="margin-top:14px">${up?"Password needs 8 or more characters. ":""}Accounts and study data are stored in this browser only. ${up?"":`<button class="link" data-a="aforgot">Forgot password?</button>`}</p></section>`}
+function enter(id,u,keep){window.AU=u;window.AID=id;window.SK=UK(id);
+try{if(keep){localStorage.setItem("ps_sess",id);sessionStorage.removeItem("ps_sess")}else{sessionStorage.setItem("ps_sess",id);localStorage.removeItem("ps_sess")}}catch(e){}
+let d={};try{d=JSON.parse(localStorage.getItem(SK)||"{}")}catch(e){}
+S=Object.assign(blank(),d);if(!S.name)S.name=u;document.documentElement.dataset.theme=S.theme||"dark";document.body.classList.remove("au");
+save();snap();V={v:"home"};window.DM=false;render()}
+async function alogin(){const u=$("#au_u").value.trim(),p=$("#au_p").value,A=accts()[u.toLowerCase()],er=m=>{$("#au_e").textContent=m};
+if(Date.now()<AL)return er("Too many attempts. Try again in "+Math.ceil((AL-Date.now())/1e3)+" seconds.");
+if(!u||!p)return er("Enter your username and password.");
+if(!window.crypto||!crypto.subtle)return er("Secure logins need https. Open the app from its https address.");
+if(!(A&&await hp(p,ub(A.s))===A.h)){if(++AF>=5){AF=0;AL=Date.now()+3e4}return er("Wrong username or password.")}
+AF=0;enter(u.toLowerCase(),A.u,$("#au_k").checked)}
+async function asignup(){const u=$("#au_u").value.trim(),p=$("#au_p").value,c=$("#au_c").value,id=u.toLowerCase(),A=accts(),er=m=>{$("#au_e").textContent=m};
+if(!/^[A-Za-z0-9._-]{3,20}$/.test(u))return er("Username: 3 to 20 letters, numbers, dot, dash or underscore.");
+if(!window.crypto||!crypto.subtle)return er("Secure logins need https. Open the app from its https address.");
+if(A[id])return er("That username is taken.");
+if(p.length<8)return er("Password must be at least 8 characters.");
+if(p!==c)return er("Passwords don’t match.");
+const first=!Object.keys(A).length,salt=crypto.getRandomValues(new Uint8Array(16));A[id]={u,s:b64(salt),h:await hp(p,salt),t:Date.now()};
+try{saveAccts(A);if(first){const o=localStorage.getItem("ps2");if(o&&!localStorage.getItem(UK(id)))localStorage.setItem(UK(id),o)}}catch(e){return er("Couldn’t save in this browser.")}
+enter(id,u,$("#au_k").checked)}
+function logout(){try{localStorage.removeItem("ps_sess");sessionStorage.removeItem("ps_sess")}catch(e){}
+window.AU=null;window.AID=null;window.SK=null;S=blank();cl=null;st=null;z=null;AT="in";closeMenu();render()}
+const SNK=()=>"ps_snaps_"+window.AID;
+function snaps(){try{return JSON.parse(localStorage.getItem(SNK())||"[]")}catch(e){return[]}}
+function snap(force){if(!window.AID||!(S.sets.length||S.revs.length))return;const l=snaps();if(!force&&l[0]&&Date.now()-l[0].t<432e5)return;
+l.unshift({t:Date.now(),n:S.sets.length,r:S.revs.length,d:JSON.stringify(S)});l.length=Math.min(l.length,3);try{localStorage.setItem(SNK(),JSON.stringify(l))}catch(e){}}
+async function bdl(){const name="pinkstudy-backup-"+window.AU+"-"+new Date().toISOString().slice(0,10)+".json",txt=JSON.stringify({app:"PinkStudy",v:1,exported:new Date().toISOString(),user:window.AU,data:S},null,1);
+try{const d=window.claude&&await claude.use("downloads");
+if(d)await d.save({filename:name,data:txt});else{const a=document.createElement("a");a.href=URL.createObjectURL(new Blob([txt],{type:"application/json"}));a.download=name;document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(a.href),5e3)}
+S.lastBackup=Date.now();save();toast("Backup ready");render(1)}catch(e){toast("The backup wasn’t saved.")}}
+async function brestore(f){try{if(f.size>1e7)throw 0;const o=JSON.parse(await f.text()),d=o&&o.data;
+if(!o||o.app!=="PinkStudy"||!d||!Array.isArray(d.sets)||!d.sets.every(s=>s&&Array.isArray(s.cards))||(d.revs&&!Array.isArray(d.revs)))throw 0;
+if(!confirm("Replace everything in this account with the backup from "+String(o.exported||"").slice(0,10)+" ("+d.sets.length+" sets)? Your current data is saved as a snapshot first."))return;
+snap(1);S=Object.assign(blank(),d);S.lastBackup=Date.now();save();document.documentElement.dataset.theme=S.theme||"dark";toast("Backup restored");render(1)}catch(e){toast("That file isn’t a valid PinkStudy backup.")}}
+function bpanel(){const l=snaps(),lb=S.lastBackup;
+return `<div class="panel"><b>Account</b><p class="hint">Signed in as <b>${esc(window.AU)}</b>. Accounts are stored in this browser only.</p><details style="margin:10px 0;color:var(--muted)"><summary style="cursor:pointer;color:var(--lpink)">Change password</summary><label for="pw0" style="margin-top:10px">Current password</label><input class="in" id="pw0" type="password" autocomplete="current-password"><label for="pw1" style="margin-top:10px">New password</label><input class="in" id="pw1" type="password" autocomplete="new-password"><label for="pw2" style="margin-top:10px">Confirm new password</label><input class="in" id="pw2" type="password" autocomplete="new-password"><div class="row2"><button class="btn ghost" data-a="pwchg">Update password</button><span class="hint" id="pwm"></span></div></details><div class="row2"><button class="btn ghost" data-a="logout">Log out</button><button class="link" data-a="delacct">Delete this account</button></div></div>
+<div class="panel"><b>Backup and restore</b><p class="hint">Your data lives in this browser. Download a backup file to keep it safe, or to move it to another device or web address.</p><p class="hint">Last backup file: ${lb?new Date(lb).toLocaleString():"none yet"}</p><div class="row2"><button class="btn" data-a="bdl">Download backup</button><button class="btn ghost" data-a="brs">Restore from file</button></div><input type="file" id="bfile" accept=".json,application/json" hidden>
+<p class="hint" style="margin-top:14px">Automatic snapshots on this device (latest 3, taken when you log in and before any restore or reset):</p>${l.map((x,i)=>`<div class="cr"><b>${new Date(x.t).toLocaleString()}</b><span>${x.n} sets, ${x.r} reviewers · <button class="link" data-a="snr" data-i="${i}">Restore</button></span></div>`).join("")||`<p class="hint">None yet. One is taken once you have a set or reviewer.</p>`}</div>`}
+const _cv=cfgv;cfgv=function(){return _cv()+bpanel()+cpanel()};
+const _mh=menuHtml;menuHtml=function(){return _mh().replace("Saved on this device","@"+window.AU).replace('<div class="mi-sep"></div><button class="mi" data-a="privacy">','<button class="mi" data-a="logout"><span aria-hidden="true">⎋</span>Log out</button><div class="mi-sep"></div><button class="mi" data-a="privacy">')};
+const _dv=window.dashv;window.dashv=function(){const h=_dv(),need=(S.sets.length||S.revs.length)&&(!S.lastBackup||Date.now()-S.lastBackup>6048e5);
+return need?h.replace('</div>\n<section class="split">','</div><div class="panel" style="display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap;margin:0 0 20px"><div><b>Back up your data</b><p class="hint" style="margin:2px 0 0">'+(S.lastBackup?"Your last backup file is over a week old.":"You haven’t downloaded a backup file yet.")+'</p></div><button class="btn" data-a="bdl">Download backup</button></div>\n<section class="split">'):h};
+const _act5=act;
+act=function(b){const a=b.dataset.a;
+if(a==="atab"){AT=b.dataset.k;return render()}
+if(a==="alogin")return alogin();
+if(a==="asignup")return asignup();
+if(a==="aforgot"){$("#au_e").textContent="Passwords can’t be recovered, because everything is stored on this device. Sign up with a new username, then restore your latest backup file in Settings.";return}
+if(a==="logout")return logout();
+if(a==="bdl")return bdl();
+if(a==="brs"){const f=$("#bfile");return f&&f.click()}
+if(a==="snr"){const x=snaps()[+b.dataset.i];if(x&&confirm("Restore the snapshot from "+new Date(x.t).toLocaleString()+"? Your current data is saved as a snapshot first.")){snap(1);S=Object.assign(blank(),JSON.parse(x.d));save();document.documentElement.dataset.theme=S.theme||"dark";toast("Snapshot restored");render(1)}return}
+if(a==="reset"){if(confirm("Delete all your data in this account? A snapshot is saved first, but this can’t be undone once it rotates out.")){snap(1);S=blank();S.name=window.AU;save();toast("All data deleted");go("home")}return}
+if(a==="delacct"){if(confirm("Delete the account “"+window.AU+"” and all its data on this device? Download a backup first if you want to keep it.")){const id=window.AID,A=accts();delete A[id];try{saveAccts(A);localStorage.removeItem(UK(id));localStorage.removeItem("ps_snaps_"+id)}catch(e){}logout()}return}
+return _act5(b)};
+document.addEventListener("change",e=>{if(e.target.id==="bfile"&&e.target.files[0]){brestore(e.target.files[0]);e.target.value=""}});
+document.addEventListener("keydown",e=>{if(e.key==="Enter"&&!window.AU&&e.target.closest&&e.target.closest(".auth")){const b=$(".auth .btn");if(b)b.click()}});
+const norm=s=>String(s||"").toLowerCase().replace(/[^\p{L}\p{N} ]+/gu," ").replace(/\s+/g," ").trim();
+function lev(a,b){const m=a.length,n=b.length;let p=Array.from({length:n+1},(_,j)=>j);for(let i=1;i<=m;i++){const c=[i];for(let j=1;j<=n;j++)c[j]=Math.min(p[j]+1,c[j-1]+1,p[j-1]+(a[i-1]===b[j-1]?0:1));p=c}return p[n]}
+function fuzzy(v,ans){return String(ans).split(";").map(norm).filter(Boolean).some(x=>v===x||(x.length>=6&&lev(v,x)<=1)||(x.length>=12&&lev(v,x)<=2))}
+async function pwchg(){const m=s=>{$("#pwm").textContent=s},A=accts(),a=A[window.AID];
+if(!(a&&await hp($("#pw0").value,ub(a.s))===a.h))return m("Current password is wrong.");
+const p=$("#pw1").value;if(p.length<8)return m("New password needs 8 or more characters.");if(p!==$("#pw2").value)return m("New passwords don’t match.");
+const salt=crypto.getRandomValues(new Uint8Array(16));a.s=b64(salt);a.h=await hp(p,salt);try{saveAccts(A)}catch(e){return m("Couldn’t save.")}
+["pw0","pw1","pw2"].forEach(i=>$("#"+i).value="");m("Password updated.")}
+function csvp(t){const r=[];let row=[],f="",q=0;t=t.replace(/^\uFEFF/,"");for(let i=0;i<t.length;i++){const c=t[i];
+if(q){if(c==='"'){if(t[i+1]==='"'){f+='"';i++}else q=0}else f+=c}
+else if(c==='"')q=1;else if(c===","){row.push(f);f=""}else if(c==="\n"||c==="\r"){if(c==="\r"&&t[i+1]==="\n")i++;row.push(f);f="";if(row.some(x=>x.trim()))r.push(row);row=[]}else f+=c}
+row.push(f);if(row.some(x=>x.trim()))r.push(row);return r}
+const csvq=s=>'"'+String(s).replace(/"/g,'""')+'"';
+async function dl(name,txt,type){const d=window.claude&&await claude.use("downloads");if(d)return d.save({filename:name,data:txt});const a=document.createElement("a");a.href=URL.createObjectURL(new Blob([txt],{type}));a.download=name;document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(a.href),5e3)}
+async function csvx(){if(!S.sets.length)return toast("No sets to export yet.");
+const L=["set,term,definition"];S.sets.forEach(s=>s.cards.forEach(c=>L.push([s.title,c.t,c.d].map(csvq).join(","))));
+try{await dl("pinkstudy-sets-"+new Date().toISOString().slice(0,10)+".csv",L.join("\r\n"),"text/csv");toast("CSV ready")}catch(e){toast("The export wasn’t saved.")}}
+async function csvi(f){try{if(f.size>5e6)throw 0;let r=csvp(await f.text());if(r[0]&&/^set$/i.test(r[0][0].trim())&&/term/i.test(r[0][1]||""))r=r.slice(1);
+const m=new Map();for(const x of r){const w=x.length>=3,n=(w?x[0].trim():"")||"Imported set",tm=(w?x[1]:x[0]||"").trim(),df=(w?x[2]:x[1]||"").trim();if(!tm||!df)continue;if(!m.has(n))m.set(n,[]);m.get(n).push({t:tm,d:df})}
+const ok=[...m.entries()].filter(e=>e[1].length>=2);if(!ok.length)throw 0;
+ok.forEach(([title,cards])=>S.sets.unshift({id:Date.now().toString(36)+Math.random().toString(36).slice(2,5),title:title.slice(0,80),subject:"",cards}));save();toast("Imported "+ok.length+" set"+(ok.length>1?"s":""));render(1)}catch(e){toast("Couldn’t read that CSV. Use columns: set, term, definition.")}}
+function cpanel(){return `<div class="panel"><b>Import and export sets (CSV)</b><p class="hint">Columns: set, term, definition. Works with Excel and Google Sheets, so you can bring in sets from other apps.</p><div class="row2"><button class="btn" data-a="csvx">Export all sets</button><button class="btn ghost" data-a="csvb">Import CSV</button></div><input type="file" id="cfile" accept=".csv,text/csv" hidden></div>`}
+document.addEventListener("change",e=>{if(e.target.id==="cfile"&&e.target.files[0]){csvi(e.target.files[0]);e.target.value=""}});
+const _act6=act;
+act=function(b){const a=b.dataset.a;
+if(a==="qcnt"){z.cnt=+b.dataset.k;return render(1)}
+if(a==="chk"){const q=z.qs[z.i],raw=$("#idin").value||"",v=norm(raw),ok=!!v&&fuzzy(v,q.a);z.pk=1;z.ok=ok;z.ans=raw;if(ok)z.sc++;return render(1)}
+if(a==="qnext"){const q=z.qs[z.i],bad=q.ty==="id"?!z.ok:q.o[z.pk]!==q.a;if(bad)(z.miss=z.miss||[]).push({q,got:q.ty==="id"?z.ans:q.o[z.pk]})}
+if(a==="qretry"){const qs=z.miss.map(x=>x.q);z={id:z.id,ty:z.ty,cnt:z.cnt,i:0,sc:0,pk:null,done:0,qs};return go("quiz")}
+if(a==="pwchg")return pwchg();
+if(a==="csvx")return csvx();
+if(a==="csvb"){const f=$("#cfile");return f&&f.click()}
+return _act6(b)};
+document.addEventListener("input",e=>{if(e.target.id!=="qn"||!z)return;const v=parseInt(e.target.value,10);if(!(v>=1))return;z.cnt=Math.min(v,100);if(v>100)e.target.value=100;const b=$("#qstart");if(b)b.textContent="Start quiz · "+z.cnt+" questions";document.querySelectorAll("[data-a=qcnt]").forEach(c=>c.classList.toggle("on",+c.dataset.k===z.cnt))});
+const _r3=render;render=function(k){if(!window.AU){authRender();return}_r3(k)};
+(function(){let id=null,keep=false;try{id=localStorage.getItem("ps_sess");keep=!!id;if(!id)id=sessionStorage.getItem("ps_sess")}catch(e){}const a=id&&accts()[id];if(a)enter(id,a.u,keep)})();
+render(1);
+</script>
+<style>
+.brand{cursor:pointer}
+body.wl aside,body.wl .me,body.wl .menu{display:none!important}
+body.wl main{max-width:760px;min-height:100vh;display:grid;align-content:center;text-align:center;padding:40px 22px}
+.wel{display:flex;flex-direction:column;align-items:center}
+.wel .logo{width:62px;height:62px;font-size:30px;border-radius:20px 20px 20px 6px;margin-bottom:14px}
+.wel h1{font-size:40px}.wel .art{width:210px;margin:6px 0 26px}
+.btn.big{padding:16px 36px;font-size:18px}
+.pills{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin-top:26px}
+.pill{padding:6px 14px;border-radius:99px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.13);color:var(--muted);font-size:14px}
+.tiles{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:10px}
+.tile{display:flex;align-items:center;gap:10px;padding:14px 16px;border-radius:16px;font-weight:500;text-align:left;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.13);transition:border-color .2s}
+.tile:hover{border-color:var(--pink)}.tile span{width:22px;text-align:center;color:var(--lpink)}
+.set.on{border-color:var(--pink);background:rgba(255,92,168,.2)}
+[data-theme=light] .tile,[data-theme=light] .pill{background:rgba(255,255,255,.7);border-color:rgba(200,61,131,.22)}
+@media(max-width:760px){.stats{grid-template-columns:repeat(2,1fr)}.wel h1{font-size:32px}}
+@media(min-width:761px){nav{justify-content:flex-end}nav button.hm{display:none}nav button{font-size:15px!important;gap:8px!important}}
+.dsh{display:grid;grid-template-columns:230px minmax(0,1fr);gap:22px;align-items:start}
+.dq{position:sticky;top:84px;display:flex;flex-direction:column;gap:4px;padding:14px;border-radius:22px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.13);box-shadow:0 8px 32px rgba(0,0,0,.35);-webkit-backdrop-filter:blur(18px);backdrop-filter:blur(18px)}
+.dq h3{margin:2px 8px 8px;color:var(--muted);font-size:13px;font-weight:500;text-transform:uppercase;letter-spacing:.06em}
+.dq button{display:flex;align-items:center;gap:12px;padding:10px 12px;border-radius:12px;color:var(--muted);text-align:left;font-weight:500}
+.dq button span{width:22px;text-align:center}
+.dq button:hover{background:rgba(255,255,255,.08);color:var(--text)}
+.dq button.on{background:rgba(255,92,168,.2);color:var(--lpink);box-shadow:inset 0 0 0 1px rgba(255,156,203,.3)}
+.pop{min-width:0;padding:26px;border-radius:26px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.13);box-shadow:0 18px 60px rgba(0,0,0,.4)}
+.pop.in{animation:popin .28s ease-out}
+@keyframes popin{from{transform:scale(.96) translateY(10px);opacity:0}to{transform:none;opacity:1}}
+[data-theme=light] .dq,[data-theme=light] .pop{background:rgba(255,255,255,.7);border-color:rgba(200,61,131,.22);box-shadow:0 8px 28px rgba(200,61,131,.12)}
+@media(max-width:760px){.dsh{grid-template-columns:1fr}.dq{position:static;flex-direction:row;overflow-x:auto;padding:10px}.dq h3{display:none}.dq button{flex:none;white-space:nowrap}.pop{padding:18px}}
+body.au aside,body.au .me,body.au .menu{display:none!important}
+body.au main{max-width:460px;min-height:100vh;display:grid;align-content:center;padding:28px 18px}
+.auth{margin:0;padding:28px}.auth .logo{width:54px;height:54px;font-size:26px;margin-bottom:12px}
+.auth input[type=checkbox]{width:18px;height:18px;accent-color:var(--pink)}
+</style>
+</body>
+</html>
